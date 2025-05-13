@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char nome[30];
+    float consumo_por_dia;
+} AnimalConsumo;
+
+float buscarConsumo(char nome[], AnimalConsumo tabela[], int tamanho) {
+    for (int i = 0 ; i < tamanho; i++) {
+        if (strcmp(nome, tabela[i].nome) == 0) {
+            return tabela [i].consumo_por_dia;
+        }
+    }
+    return -1;
+}
+
+
+int main() {
+    AnimalConsumo tabela[] = {
+            {"Leopardo", 10},
+            {"Onca", 8},
+            {"Leao", 9},
+            {"Leoa",11},
+    };
+
+        int tamanho_tabela = sizeof(tabela) / sizeof(tabela[0]);
+
+
+        char nome_animal[30];
+        int quantidade;
+        float preco_kilo;
+
+        printf("Escolha entre Leopardo, Onca, Leao, e Leoa \n Digite o tipo do animal: ");
+        scanf("%s", nome_animal);
+
+        printf("Digite a quantidade de animais: ");
+        scanf("%d", &quantidade);
+
+        printf("Digite o custo estimado por kilo de comida: ");
+        scanf("%f", &preco_kilo);
+
+        float consumo_individual = buscarConsumo(nome_animal, tabela, tamanho_tabela);
+        if (consumo_individual == -1) {
+            printf("animal nao existe\n");
+            return 1;
+        }
+
+        float total_dia = consumo_individual * quantidade;
+        float total_mes = total_dia * 31;
+        float custo_mes = preco_kilo * total_mes;
+
+    printf("\n--- Relatorio ---\n");
+    printf("Tipo de Animal: %s\n", nome_animal);
+    printf("Quantidade de Animais: %d\n", quantidade);
+    printf("Consumo por Animal (kg/dia): %.2f\n", consumo_individual);
+    printf("Total por Dia (kg): %.2f\n", total_dia);
+    printf("Total por Mes (kg): %.2f\n", total_mes);
+    printf("Custo Estimado por Mes: R$ %.2f\n", custo_mes);
+
+        return 0;
+}
